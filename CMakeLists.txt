@@ -1,8 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-# Include CPACK (We want to get a .deb package!)
-include(CPackConfig.cmake)
-
 if(POLICY CMP0025)
   # detect Apple's Clang
   cmake_policy(SET CMP0025 NEW)
@@ -175,3 +172,6 @@ INSTALL(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
     DESTINATION "${CMAKE_INSTALL_DIR}"
     COMPONENT dev)
+
+# Include CPACK (We want to get a .deb package!)
+include(CPackConfig.cmake)
