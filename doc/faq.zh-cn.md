@@ -18,7 +18,7 @@
 
 4. RapidJSON 是免费的么？
 
-   是的，它在 MIT 特許條款下免费。它可用于商业软件。详情请参看 [license.txt](https://github.com/miloyip/rapidjson/blob/master/license.txt)。
+   是的，它在 MIT 特許條款下免费。它可用于商业软件。详情请参看 [license.txt](https://github.com/Tencent/rapidjson/blob/master/license.txt)。
 
 5. RapidJSON 很小么？它有何依赖？
 
@@ -44,7 +44,7 @@
 
 10. RapidJSON 是如何被测试的？
 
-   RapidJSON 包含一组单元测试去执行自动测试。[Travis](https://travis-ci.org/miloyip/rapidjson/)（供 Linux 平台）及 [AppVeyor](https://ci.appveyor.com/project/miloyip/rapidjson/)（供 Windows 平台）会对所有修改进行编译及执行单元测试。在 Linux 下还会使用 Valgrind 去检测内存泄漏。
+   RapidJSON 包含一组单元测试去执行自动测试。[Travis](https://travis-ci.org/Tencent/rapidjson/)（供 Linux 平台）及 [AppVeyor](https://ci.appveyor.com/project/Tencent/rapidjson/)（供 Windows 平台）会对所有修改进行编译及执行单元测试。在 Linux 下还会使用 Valgrind 去检测内存泄漏。
 
 11. RapidJSON 是否有完整的文档？
 
@@ -70,7 +70,7 @@
 
 3. RapidJSON 是否支持宽松的语法？
 
-   现时不支持。RapidJSON 只支持严格的标准格式。宽松语法现时在这 [issue](https://github.com/miloyip/rapidjson/issues/36) 中进行讨论。
+   现时不支持。RapidJSON 只支持严格的标准格式。宽松语法现时在这 [issue](https://github.com/Tencent/rapidjson/issues/36) 中进行讨论。
 
 ## DOM 与 SAX
 
@@ -88,11 +88,11 @@
 
 4. 什么是原位（*in situ*）解析？
 
-   原位解析会把 JSON 字符串直接解码至输入的 JSON 中。这是一个优化，可减少内存消耗及提升性能，但输入的 JSON 会被更改。进一步细节请参考 [原位解析](doc/dom.md) 。
+   原位解析会把 JSON 字符串直接解码至输入的 JSON 中。这是一个优化，可减少内存消耗及提升性能，但输入的 JSON 会被更改。进一步细节请参考 [原位解析](doc/dom.zh-cn.md) 。
 
 5. 什么时候会产生解析错误？
 
-   当输入的 JSON 包含非法语法，或不能表示一个值（如 Number 太大），或解析器的处理器中断解析过程，解析器都会产生一个错误。详情请参考 [解析错误](doc/dom.md)。
+   当输入的 JSON 包含非法语法，或不能表示一个值（如 Number 太大），或解析器的处理器中断解析过程，解析器都会产生一个错误。详情请参考 [解析错误](doc/dom.zh-cn.md)。
 
 6. 有什么错误信息？
 
@@ -163,15 +163,15 @@
 
 ## Document/Value (DOM)
 
-1. 什么是转移语意？为什么？
+1. 什么是转移语义？为什么？
 
-   `Value` 不用复制语意，而使用了转移语意。这是指，当把来源值赋值于目标值时，来源值的所有权会转移至目标值。
+   `Value` 不用复制语义，而使用了转移语义。这是指，当把来源值赋值于目标值时，来源值的所有权会转移至目标值。
 
    由于转移快于复制，此设计决定强迫使用者注意到复制的消耗。
 
 2. 怎样去复制一个值？
 
-   有两个 API 可用：含 allocator 的构造函数，以及 `CopyFrom()`。可参考 [深复制 Value](doc/tutorial.md) 里的用例。
+   有两个 API 可用：含 allocator 的构造函数，以及 `CopyFrom()`。可参考 [深复制 Value](doc/tutorial.zh-cn.md) 里的用例。
 
 3. 为什么我需要提供字符串的长度？
 
@@ -239,7 +239,7 @@
 
    [字节顺序标记（byte order mark, BOM）](http://en.wikipedia.org/wiki/Byte_order_mark) 有时会出现于文件／流的开始，以表示其 UTF 编码类型。
 
-   RapidJSON 的 `EncodedInputStream` 可检测／跳过 BOM。`EncodedOutputStream` 可选择是否写入 BOM。可参考 [编码流](doc/stream.md) 中的例子。
+   RapidJSON 的 `EncodedInputStream` 可检测／跳过 BOM。`EncodedOutputStream` 可选择是否写入 BOM。可参考 [编码流](doc/stream.zh-cn.md) 中的例子。
 
 5. 为什么会涉及大端／小端？
 
@@ -257,7 +257,7 @@
 
 3. 什是是 SIMD？它如何用于 RapidJSON？
 
-   [SIMD](http://en.wikipedia.org/wiki/SIMD) 指令可以在现代 CPU 中执行并行运算。RapidJSON 支持了 Intel 的 SSE2/SSE4.2 去加速跳过空白字符。在解析含缩进的 JSON 时，这能提升性能。只要定义名为 `RAPIDJSON_SSE2` 或 `RAPIDJSON_SSE42` 的宏，就能启动这个功能。然而，若在不支持这些指令集的机器上执行这些可执行文件，会导致崩溃。
+   [SIMD](http://en.wikipedia.org/wiki/SIMD) 指令可以在现代 CPU 中执行并行运算。RapidJSON 支持使用 Intel 的 SSE2/SSE4.2 和 ARM 的 Neon 来加速对空白符、制表符、回车符和换行符的过滤处理。在解析含缩进的 JSON 时，这能提升性能。只要定义名为 `RAPIDJSON_SSE2` ，`RAPIDJSON_SSE42` 或 `RAPIDJSON_NEON` 的宏，就能启动这个功能。然而，若在不支持这些指令集的机器上执行这些可执行文件，会导致崩溃。
 
 4. 它会消耗许多内存么？
 

@@ -20,7 +20,7 @@
 #include <sstream>
 #include <fstream>
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 RAPIDJSON_DIAG_PUSH
 RAPIDJSON_DIAG_OFF(4702) // unreachable code
 #endif
@@ -50,8 +50,9 @@ static void TestStringStream() {
         StringStreamType iss(s);
         BasicIStreamWrapper<StringStreamType> is(iss);
         EXPECT_EQ(0, is.Tell());
-        if (sizeof(Ch) == 1)
+        if (sizeof(Ch) == 1) {
             EXPECT_EQ(0, is.Peek4()); // less than 4 bytes
+        }
         for (int i = 0; i < 3; i++) {
             EXPECT_EQ(static_cast<size_t>(i), is.Tell());
             EXPECT_EQ('A' + i, is.Peek());
@@ -175,6 +176,6 @@ TEST(IStreamWrapper, wfstream) {
 
 #endif
 
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
 RAPIDJSON_DIAG_POP
 #endif
